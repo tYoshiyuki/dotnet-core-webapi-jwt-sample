@@ -37,6 +37,7 @@ namespace DotNetCoreWebApiJwtSample
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<IdentityUser>>()
+                .AddSignInManager<SignInManager<IdentityUser>>()
                 .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
@@ -82,6 +83,10 @@ namespace DotNetCoreWebApiJwtSample
                 configureOptions.ClaimsIssuer = appSettings.JwtSetting.JwtIssuer;
                 configureOptions.TokenValidationParameters = tokenValidationParameters;
                 configureOptions.SaveToken = true;
+            }).AddGoogle("Google", options =>
+            {
+                    options.ClientId = "xxx";
+                    options.ClientSecret = "xxx";
             });
 
             services.AddSwaggerGen(options =>
@@ -122,7 +127,7 @@ namespace DotNetCoreWebApiJwtSample
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "{name}");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample API v1");
                 options.RoutePrefix = string.Empty;
             });
 
