@@ -1,11 +1,10 @@
 ﻿using DotNetCoreWebApiJwtSample.RequestModels;
 using DotNetCoreWebApiJwtSample.ResponseModels;
-using DotNetCoreWebApiJwtSample.Services;
+using DotNetCoreWebApiJwtSample.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -77,7 +76,6 @@ namespace DotNetCoreWebApiJwtSample.Controllers
             return response;
         }
 
-        // TODO 基底クラスに移動
         protected ActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null || result.Succeeded) throw new ArgumentException();

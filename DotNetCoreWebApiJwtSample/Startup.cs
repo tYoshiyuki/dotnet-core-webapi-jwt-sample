@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using DotNetCoreWebApiJwtSample.Services.Interfaces;
 
 namespace DotNetCoreWebApiJwtSample
 {
@@ -42,20 +43,15 @@ namespace DotNetCoreWebApiJwtSample
 
             services.Configure<IdentityOptions>(options =>
             {
-                // Password settings
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 3;
-
-                // Lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
-
-                // User settings
                 options.User.RequireUniqueEmail = true;
             });
 

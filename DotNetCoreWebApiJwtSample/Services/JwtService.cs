@@ -6,31 +6,29 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using DotNetCoreWebApiJwtSample.Services.Interfaces;
 
 namespace DotNetCoreWebApiJwtSample.Services
 {
-    public interface IJwtService
-    {
-        string GenerateEncodedToken(string userName, IList<string> roles = null);
-    }
-
     public class JwtService : IJwtService
     {
         private readonly JwtConfigurableOptions _jwtConfigurableOptions;
+
         public JwtService(JwtConfigurableOptions jwtConfigurableOptions)
         {
             _jwtConfigurableOptions = jwtConfigurableOptions;
         }
 
         /// <summary>
-        /// Take user name, device, roles and generate encoded token.
+        /// JWTトークンを生成します
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="roles"></param>
-        /// <returns>token string</returns>
+        /// <returns></returns>
         public string GenerateEncodedToken(string userName, IList<string> roles = null)
         {
-            List<Claim> claims = new List<Claim>
+            // claimを構築する
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -39,13 +37,10 @@ namespace DotNetCoreWebApiJwtSample.Services
 
             if (roles?.Any() == true)
             {
-                foreach (string role in roles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
-                }
+                claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             }
 
-            // Create the JWT security token and encode it.
+            // JWTトークンを生成する
             var jwt = new JwtSecurityToken(
                 issuer: _jwtConfigurableOptions.JwtIssuer,
                 audience: _jwtConfigurableOptions.JwtAudience,
