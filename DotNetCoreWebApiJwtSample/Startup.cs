@@ -38,6 +38,7 @@ namespace DotNetCoreWebApiJwtSample
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<IdentityUser>>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddSignInManager<SignInManager<IdentityUser>>()
                 .AddDefaultTokenProviders();
 
@@ -101,6 +102,7 @@ namespace DotNetCoreWebApiJwtSample
             });
 
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IRoleService, RoleService>();
             services.AddSingleton<IJwtService, JwtService>();
             services.AddSingleton(config => appSettings.JwtSetting);
 

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DotNetCoreWebApiJwtSample.RequestModels;
+﻿using DotNetCoreWebApiJwtSample.RequestModels;
 using DotNetCoreWebApiJwtSample.ResponseModels;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetCoreWebApiJwtSample.Services.Interfaces
 {
@@ -14,6 +12,7 @@ namespace DotNetCoreWebApiJwtSample.Services.Interfaces
         Task<IdentityResult> Create(string email);
         Task<LoginResponseModel> Login(LoginRequestModel model);
         Task<LoginResponseModel> ExternalLogin(string email, ExternalLoginInfo info);
-
+        List<IdentityUser> GetList();
+        Task<IdentityResult> AddToRole(string email, string roleName);
     }
 }

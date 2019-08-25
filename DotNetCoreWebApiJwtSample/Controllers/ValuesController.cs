@@ -7,7 +7,7 @@ namespace DotNetCoreWebApiJwtSample.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : BaseController
     {
         // GET api/values
         [HttpGet]

@@ -1,8 +1,10 @@
-﻿using DotNetCoreWebApiJwtSample.RequestModels;
+﻿using System.Linq;
+using DotNetCoreWebApiJwtSample.RequestModels;
 using DotNetCoreWebApiJwtSample.ResponseModels;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using DotNetCoreWebApiJwtSample.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace DotNetCoreWebApiJwtSample.Services
 {
@@ -35,6 +37,27 @@ namespace DotNetCoreWebApiJwtSample.Services
         public async Task<IdentityResult> Create(string email)
         {
             return await _userManager.CreateAsync(new IdentityUser { UserName = email, Email = email }, "password");
+        }
+
+        /// <summary>
+        /// ユーザの一覧を取得します
+        /// </summary>
+        /// <returns></returns>
+        public List<IdentityUser> GetList()
+        {
+            return _userManager.Users.ToList();
+        }
+
+        /// <summary>
+        /// ユーザにロールを追加します
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        public async Task<IdentityResult> AddToRole(string email, string roleName)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return await _userManager.AddToRoleAsync(user, roleName);
         }
 
         /// <summary>
