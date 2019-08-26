@@ -67,7 +67,7 @@ namespace DotNetCoreWebApiJwtSample
                     RequireExpirationTime = false,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
-                };
+            };
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 

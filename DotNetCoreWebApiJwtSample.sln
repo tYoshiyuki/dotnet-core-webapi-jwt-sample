@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreWebApiJwtSample", "DotNetCoreWebApiJwtSample\DotNetCoreWebApiJwtSample.csproj", "{BED67B64-E215-4EAA-9774-FD55EF5FCB89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreWebApiJwtSample.Test", "DotNetCoreWebApiJwtSample.Test\DotNetCoreWebApiJwtSample.Test.csproj", "{56554CB1-0C18-4430-A35E-D7E5BA40FFE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreWebApiJwtSample.Test", "DotNetCoreWebApiJwtSample.Test\DotNetCoreWebApiJwtSample.Test.csproj", "{9FD0F794-B625-4640-9120-45F790C2E955}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{BED67B64-E215-4EAA-9774-FD55EF5FCB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED67B64-E215-4EAA-9774-FD55EF5FCB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED67B64-E215-4EAA-9774-FD55EF5FCB89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56554CB1-0C18-4430-A35E-D7E5BA40FFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56554CB1-0C18-4430-A35E-D7E5BA40FFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56554CB1-0C18-4430-A35E-D7E5BA40FFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56554CB1-0C18-4430-A35E-D7E5BA40FFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD0F794-B625-4640-9120-45F790C2E955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD0F794-B625-4640-9120-45F790C2E955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD0F794-B625-4640-9120-45F790C2E955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD0F794-B625-4640-9120-45F790C2E955}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
