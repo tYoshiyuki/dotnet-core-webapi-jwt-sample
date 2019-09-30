@@ -2,7 +2,7 @@
 ASP.NET Core の JWT で認証をする Web API のサンプル
 
 ## Feature
-- .NET Core 2.2
+- .NET Core 3.0
 - ASP.NET Core
 - ASP.NET Core Identity
 - JWT
