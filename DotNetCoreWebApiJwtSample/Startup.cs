@@ -1,21 +1,21 @@
 ﻿using DotNetCoreWebApiJwtSample.Configs;
 using DotNetCoreWebApiJwtSample.Data;
 using DotNetCoreWebApiJwtSample.Services;
+using DotNetCoreWebApiJwtSample.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using DotNetCoreWebApiJwtSample.Services.Interfaces;
 
 namespace DotNetCoreWebApiJwtSample
 {
@@ -64,9 +64,9 @@ namespace DotNetCoreWebApiJwtSample
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(appSettings.JwtSetting.JwtKey)),
-                    RequireExpirationTime = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                RequireExpirationTime = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -82,20 +82,20 @@ namespace DotNetCoreWebApiJwtSample
                 configureOptions.SaveToken = true;
             }).AddGoogle("Google", options =>
             {
-                    options.ClientId = "xxx";
-                    options.ClientSecret = "xxx";
+                options.ClientId = "xxx";
+                options.ClientSecret = "xxx";
             });
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "Sample API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
 
-                options.AddSecurityDefinition("oauth2", new ApiKeyScheme
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
-                    In = "header",
+                    In = ParameterLocation.Header,
                     Name = "Authorization",
-                    Type = "apiKey"
+                    Type = SecuritySchemeType.ApiKey
                 });
 
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
@@ -106,11 +106,12 @@ namespace DotNetCoreWebApiJwtSample
             services.AddSingleton<IJwtService, JwtService>();
             services.AddSingleton(config => appSettings.JwtSetting);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.AddMvc();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -129,9 +130,16 @@ namespace DotNetCoreWebApiJwtSample
                 options.RoutePrefix = string.Empty;
             });
 
-            app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCors();
+
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

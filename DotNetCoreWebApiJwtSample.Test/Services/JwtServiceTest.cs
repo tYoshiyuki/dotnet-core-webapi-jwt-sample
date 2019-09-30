@@ -3,9 +3,12 @@ using DotNetCoreWebApiJwtSample.Configs;
 using DotNetCoreWebApiJwtSample.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using Xunit;
 
@@ -36,11 +39,10 @@ namespace DotNetCoreWebApiJwtSample.Test.Services
         {
             // Arrange
             var roles = new List<string> { "User", "Admin" };
+            var userName = "Taro Yamada";
 
             // Act
-            var result = _service.GenerateEncodedToken("Taro Yamada", roles);
-
-            // Assert
+            var result = _service.GenerateEncodedToken(userName, roles);
             var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
             var validationParameters = new TokenValidationParameters
             {
@@ -55,10 +57,19 @@ namespace DotNetCoreWebApiJwtSample.Test.Services
                 ClockSkew = TimeSpan.Zero
 
             };
+            handler.ValidateToken(result, validationParameters, out var token);
+            var jwtToken = (System.IdentityModel.Tokens.Jwt.JwtSecurityToken)token;
 
-            // TODO ロジック実装
-            handler.ValidateToken(result, validationParameters, out SecurityToken token);
-            token.Issuer.Is(_options.JwtIssuer);
+            // Assert
+            jwtToken.Issuer.Is(_options.JwtIssuer);
+            jwtToken.Audiences.First().Is(_options.JwtAudience);
+            jwtToken.Subject.Is(userName);
+
+            var jsonRole = jwtToken.Payload.First(_ => _.Key == ClaimTypes.Role).Value;
+            foreach (var role in (JArray)jsonRole)
+            {
+                roles.Contains(role.ToString()).IsTrue();
+            }
         }
     }
 }
