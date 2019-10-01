@@ -106,7 +106,6 @@ namespace DotNetCoreWebApiJwtSample
             services.AddSingleton<IJwtService, JwtService>();
             services.AddSingleton(config => appSettings.JwtSetting);
 
-            // services.AddMvc();
             services.AddControllers();
         }
 
