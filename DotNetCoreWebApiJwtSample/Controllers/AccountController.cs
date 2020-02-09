@@ -1,4 +1,5 @@
-﻿using DotNetCoreWebApiJwtSample.RequestModels;
+﻿using System;
+using DotNetCoreWebApiJwtSample.RequestModels;
 using DotNetCoreWebApiJwtSample.ResponseModels;
 using DotNetCoreWebApiJwtSample.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
@@ -36,6 +37,8 @@ namespace DotNetCoreWebApiJwtSample.Controllers
         [Route("/Account/AddToRole")]
         public async Task<ActionResult> AddToRole([FromBody] AddToRoleRequestModel model)
         {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
             var result = await _accountService.AddToRole(model.Email, model.RoleName);
             return result.Succeeded ? Ok() : GetErrorResult(result);
         }

@@ -13,7 +13,8 @@ namespace DotNetCoreWebApiJwtSample.Controllers
     {
         protected ActionResult GetErrorResult(IdentityResult result)
         {
-            if (result == null || result.Succeeded) throw new ArgumentException();
+            if (result == null) throw new ArgumentNullException(nameof(result));
+            if (result.Succeeded) throw new ArgumentException(nameof(result));
 
 
             foreach (var error in result.Errors)

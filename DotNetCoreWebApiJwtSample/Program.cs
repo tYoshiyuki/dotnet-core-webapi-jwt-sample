@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace DotNetCoreWebApiJwtSample
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -17,6 +16,5 @@ namespace DotNetCoreWebApiJwtSample
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
 }

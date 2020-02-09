@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreWebApiJwtSample.RequestModels;
@@ -23,6 +24,8 @@ namespace DotNetCoreWebApiJwtSample.Controllers
         [Route("/Role/CreateRole")]
         public async Task<ActionResult> Create([FromBody] RoleRequestModel model)
         {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
             var result = await _roleService.Create(model.RoleName);
             return result.Succeeded ? Ok() : GetErrorResult(result);
         }

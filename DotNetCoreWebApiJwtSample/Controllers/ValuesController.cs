@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetCoreWebApiJwtSample.Controllers
 {
@@ -11,6 +12,7 @@ namespace DotNetCoreWebApiJwtSample.Controllers
     {
         // GET api/values
         [HttpGet]
+        [SuppressMessage("Performance", "CA1822:メンバーを static に設定します")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new[] { "value1", "value2" };

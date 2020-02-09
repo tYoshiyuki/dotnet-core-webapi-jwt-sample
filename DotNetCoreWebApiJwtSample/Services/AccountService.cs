@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DotNetCoreWebApiJwtSample.RequestModels;
 using DotNetCoreWebApiJwtSample.ResponseModels;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,8 @@ namespace DotNetCoreWebApiJwtSample.Services
         /// <returns></returns>
         public async Task<IdentityResult> Create(UserRequestModel user)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
             return await _userManager.CreateAsync(new IdentityUser { UserName = user.UserName, Email = user.Email }, user.Password);
         }
 
@@ -67,6 +70,8 @@ namespace DotNetCoreWebApiJwtSample.Services
         /// <returns></returns>
         public async Task<LoginResponseModel> Login(LoginRequestModel model)
         {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
             var response = new LoginResponseModel();
 
             // ユーザの存在チェック
